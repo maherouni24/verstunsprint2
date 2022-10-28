@@ -1,0 +1,36 @@
+module.exports=(sequelize,DataTypes)=>{
+    const sitearcheologique=sequelize.define(
+        'sitearcheologique',
+        {
+            nomS:{
+                type:DataTypes.STRING,
+                allowNull:false
+            },
+            gouvernoratS:{
+                type:DataTypes.STRING,
+                allowNull:false
+            },
+            lik:{
+                type:DataTypes.INTEGER
+            },
+            userId:{
+                type:DataTypes.INTEGER,
+                allowNull:false,
+                references:{
+                  model:'users',
+                  key:'id'  
+                }  
+            }
+        }
+    );
+    sitearcheologique.associate=models=>{
+        sitearcheologique.hasMany(models.visite,{onDelete:"cascade"})
+    }
+    sitearcheologique.associate=models=>{
+        sitearcheologique.hasMany(models.like,{onDelete:"cascade"})
+    }
+    sitearcheologique.associate=models=>{
+        sitearcheologique.belongsTo(models.user,{onDelete:"cascade"})
+    }
+    return sitearcheologique;
+}
