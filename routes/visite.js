@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var asyncLib = require('async');
 
 var db=require('../models');
 
@@ -41,5 +41,9 @@ router.get('/fetch', function(req, res, next) {
             res.send(resp)
           })
       })
+      router.get('/search/:key',async (req, res) =>{
+        let db = await visite.find()
+        resp.send(db)
+          })
 
 module.exports = router;

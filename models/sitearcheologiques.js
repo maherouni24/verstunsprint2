@@ -10,7 +10,10 @@ module.exports=(sequelize,DataTypes)=>{
                 type:DataTypes.STRING,
                 allowNull:false
             },
-            lik:{
+            like:{
+                type:DataTypes.INTEGER
+            },
+            dislike:{
                 type:DataTypes.INTEGER
             },
             userId:{
@@ -24,10 +27,11 @@ module.exports=(sequelize,DataTypes)=>{
         }
     );
     sitearcheologique.associate=models=>{
-        sitearcheologique.hasMany(models.visite,{onDelete:"cascade"})
+        sitearcheologique.hasMany(models.like,{onDelete:"cascade"})
+        sitearcheologique.hasMany(models.dislike,{onDelete:"cascade"})
     }
     sitearcheologique.associate=models=>{
-        sitearcheologique.hasMany(models.like,{onDelete:"cascade"})
+        sitearcheologique.hasMany(models.visite,{onDelete:"cascade"})
     }
     sitearcheologique.associate=models=>{
         sitearcheologique.belongsTo(models.user,{onDelete:"cascade"})

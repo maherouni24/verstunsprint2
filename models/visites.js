@@ -5,6 +5,15 @@ module.exports=(sequelize,DataTypes)=>{
             dateV:{
                 type:DataTypes.DATE,
                 allowNull:false
+            },
+            nbPersonne:{
+                type:DataTypes.INTEGER,   
+            },
+            like:{
+                type:DataTypes.INTEGER,   
+            },
+            dislike:{
+                type:DataTypes.INTEGER,   
             }
         }
     );

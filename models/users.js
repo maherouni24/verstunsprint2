@@ -22,6 +22,7 @@ module.exports=(sequelize,DataTypes)=>{
     );
     user.associate=models=>{
         user.hasMany(models.like,{onDelete:"cascade"})
+        user.hasMany(models.dislike,{onDelete:"cascade"})
     }
     user.associate=models=>{
         user.hasMany(models.sitearcheologique,{onDelete:"cascade"})

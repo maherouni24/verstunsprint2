@@ -1,12 +1,17 @@
 module.exports=(sequelize,DataTypes)=>{
-    const like=sequelize.define(
-        'like',
+    const likecomment=sequelize.define(
+        'likecomment',
         {
-            sitearcheologiqueId:{
+            id:{
+                type:DataTypes.INTEGER,
+                defaultValue:DataTypes.UUIDV4,
+                primaryKey:true
+            },
+            commentId:{
                 type:DataTypes.INTEGER,
                 allowNull:false,
                 references:{
-                  model:'sitearcheologiques',
+                  model:'comments',
                   key:'id'  
                 }  
             } ,  
@@ -20,11 +25,9 @@ module.exports=(sequelize,DataTypes)=>{
             }   
         }
     );
-    like.associate=models=>{
-        like.belongsTo(models.sitearcheologique,{onDelete:"cascade"})
+    likecomment.associate=models=>{
+        likecomment.belongsTo(models.comment,{onDelete:"cascade"})
+        likecomment.belongsTo(models.user,{onDelete:"cascade"})
     }
-    like.associate=models=>{
-        like.belongsTo(models.user,{onDelete:"cascade"})
-    }
-    return like;
+    return likecomment;
 }

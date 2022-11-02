@@ -12,6 +12,11 @@ var visiteRouter=require('./routes/visite');
 var userRouter=require('./routes/user');
 var likesCtrlRouter=require('./routes/likesCtrl');
 var messagesCtrlRouter=require('./routes/messagesCtrl');
+var likeRouter=require('./routes/like');
+var dislikeRouter=require('./routes/dislike');
+var commentRouter=require('./routes/comment');
+var likecommentRouter=require('./routes/likecomment');
+var dislikecommentRouter=require('./routes/dislikecomment');
 
 var app = express();
 var db=require('./models');
@@ -38,7 +43,11 @@ app.use('/v', visiteRouter);
 app.use('/user', userRouter);
 app.use('/l', likesCtrlRouter);
 app.use('/message',messagesCtrlRouter);
-
+app.use('/like', likeRouter);
+app.use('/dislike', dislikeRouter);
+app.use('/comment', commentRouter);
+app.use('/likecomment', likecommentRouter);
+app.use('/dislikecomment', dislikecommentRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

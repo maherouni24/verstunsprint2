@@ -17,7 +17,7 @@ const LIKED    = 1;
     var userId      = jwtUtils.getUserId(headerAuth);
 
     // Params
-    var sitearcheologiqueId = parseInt(req.query.sitearcheologiqueId);
+    var sitearcheologiqueId = parseInt(req.params.sitearcheologiqueId);
 
     if (sitearcheologiqueId <= 0) {
       return res.status(400).json({ 'error': 'invalid parameters' });

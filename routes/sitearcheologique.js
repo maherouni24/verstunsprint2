@@ -1,9 +1,7 @@
 var express = require('express');
 var router = express.Router();
-
-
 var db=require('../models');
-
+const { Op } = require("sequelize");
 
 router.post('/add',(req,res)=>{
   db.sitearcheologique.create(req.body).then(
@@ -36,16 +34,29 @@ router.get('/fetch', function(req, res, next) {
         res.send(resp)
       })
     });
-    router.get('/search/:gouvernoratS', function (req, res) {
-      db.sitearcheologique.findAll({where:{gouvernoratS:req.params.gouvernoratS}}).then((resp)=>{
-        res.send(resp)
-      })
+    //router.get('/search/:gouvernoratS', function (req, res) {
+      //db.sitearcheologique.findAll({where:{gouvernoratS:req.params.gouvernoratS}}).then((resp)=>{
+        //res.send(resp)
+      //})
+    //})
+    
+    //router.get('/search/:gouvernoratS/:nomS/:userId', function (req, res) {
+      //db.sitearcheologique.findAll({where:{gouvernoratS:req.params.gouvernoratS,nomS:req.params.nomS,userId:req.params.userId}}).then((resp)=>{
+        //res.send(resp)
+      //})
+    //})
+     //recherche multiple :3   
+    router.get('/searchBy/:c',function(req,res){
+    db.sitearcheologique.findOne({ where:{
+     [Op.or]:[
+      {nomS:req.params.c},
+      {gouvernoratS:req.params.c},
+      {userId:req.params.c},
+     ] 
+    }}).then((resp)=>{
+      res.render(resp)
     })
-    router.get('/search/:gouvernoratS/:nomS', function (req, res) {
-      db.sitearcheologique.findAll({where:{gouvernoratS:req.params.gouvernoratS,nomS:req.params.nomS}}).then((resp)=>{
-        res.send(resp)
-      })
-    })
+    });
 
 
 module.exports = router;
