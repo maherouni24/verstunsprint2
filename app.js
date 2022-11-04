@@ -1,57 +1,110 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
+//imports
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+const multer = require("multer");
 
-// import routes
-var indexRouter = require("./routes");
-const authRoutes = require("./routes/auth");
-const reclamationRoutes = require("./routes/reclamation");
+//
+var bodyParser  = require('body-parser');
+//
+var indexRouter = require('./routes/index');
+const utilRouter=require('./routes/utilisateurs');
+var roleRouter = require('./routes/roles');
 
-
-const userRoutes = require("./routes/user");
-
+var blgRouter = require('./routes/blogs');
+var caRouter = require('./routes/categories');
+var comRouter = require('./routes/commentaires');
 var app = express();
 var db=require('./models');
 db.sequelize.sync().then(()=>{
   console.log('db connected')
+
 });
 
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
 
-app.use(logger("dev"));
+
+// storage engine 
+
+const storage = multer.diskStorage({
+  destination: './upload/images',
+  filename: (req, file, cb) => {
+      return cb(null, `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
+  }
+})
+
+const upload = multer({
+  storage: storage,
+  limits: {
+      fileSize: 10000000
+  }
+})
+app.use('/profile', express.static('upload/images'));
+app.post("/upload", upload.single('profile'), (req, res) => {
+
+  res.json({
+      success: 1,
+      profile_url: `http://localhost:3000/profile/${req.file.filename}`
+  })
+})
+
+function errHandler(err, req, res, next) {
+  if (err instanceof multer.MulterError) {
+      res.json({
+          success: 0,
+          message: err.message
+      })
+  }
+}
+app.use(errHandler);
+
+//************* */
+// Body Parser configuration
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+// Configure routes
+app.get('/', function (req, res) {
+  res.setHeader('Content-Type', 'text/html');
+  res.status(200).send('<h1>Bonjour sur mon super server</h1>');
+});
+
+///*************** */
+
+
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.use("/", indexRouter);
-app.use("/user", authRoutes);
-app.use("/reclamation", reclamationRoutes);
+app.use('/', indexRouter);
+app.use('/utilisateurs', utilRouter);
+app.use('/roles', roleRouter);
 
-app.use("/user", userRoutes);
-app.use(function (err, req, res, next) {
-  if (err.name === "UnauthorizedError") {
-    res.status(401).json({ error: "Unauthorized Access: Invalid JWT token !" });
-  }
-});
+app.use('/blogs', blgRouter);
+app.use('/categories', caRouter);
+app.use('/commentaires', comRouter);
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  res.status(err.status || 8000);
-  res.render("error");
+  res.status(err.status || 500);
+  res.render('error');
 });
 
 module.exports = app;
