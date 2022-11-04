@@ -47,6 +47,7 @@ router.get('/fetch', function(req, res, next) {
     //})
      //recherche multiple :3   
     router.get('/searchBy/:c',function(req,res){
+      var c=req.params.c;
     db.sitearcheologique.findOne({ where:{
      [Op.or]:[
       {nomS:req.params.c},

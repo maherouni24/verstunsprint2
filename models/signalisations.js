@@ -1,0 +1,32 @@
+module.exports=(sequelize,DataTypes)=>{
+    const signalisation=sequelize.define(
+        'signalisation',
+        {
+            status:{
+                type:DataTypes.STRING,
+                allowNull:false,
+            },
+            postId:{
+                type:DataTypes.INTEGER,
+                allowNull:false,
+                references:{
+                  model:'posts',
+                  key:'id'  
+                }  
+            },
+            userId:{
+                type:DataTypes.INTEGER,
+                allowNull:false,
+                references:{
+                  model:'users',
+                  key:'id'  
+                }  
+            }
+        }
+    );
+    signalisation.associate=models=>{
+        signalisation.belongsTo(models.user,{onDelete:"cascade"})
+        signalisation.belongsTo(models.post,{onDelete:"cascade"})
+    }
+    return signalisation;
+}

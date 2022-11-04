@@ -1,0 +1,32 @@
+module.exports=(sequelize,DataTypes)=>{
+    const commentsignal=sequelize.define(
+        'commentsignal',
+        {
+            status:{
+                type:DataTypes.STRING,
+                allowNull:false,
+            },
+            commentpostId:{
+                type:DataTypes.INTEGER,
+                allowNull:false,
+                references:{
+                  model:'commentposts',
+                  key:'id'  
+                }  
+            },
+            userId:{
+                type:DataTypes.INTEGER,
+                allowNull:false,
+                references:{
+                  model:'users',
+                  key:'id'  
+                }  
+            }
+        }
+    );
+    commentsignal.associate=models=>{
+        commentsignal.belongsTo(models.user,{onDelete:"cascade"})
+        commentsignal.belongsTo(models.commentpost,{onDelete:"cascade"})
+    }
+    return commentsignal;
+}

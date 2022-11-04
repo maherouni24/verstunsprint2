@@ -17,6 +17,13 @@ var dislikeRouter=require('./routes/dislike');
 var commentRouter=require('./routes/comment');
 var likecommentRouter=require('./routes/likecomment');
 var dislikecommentRouter=require('./routes/dislikecomment');
+var participantRouter=require('./routes/participant');
+var postRouter=require('./routes/post');
+var likepostRouter=require('./routes/likepost');
+var dislikepostRouter=require('./routes/dislikepost');
+var commentpostRouter=require('./routes/commentpost');
+var signalisationRouter=require('./routes/signalisation');
+var commentsignalRouter=require('./routes/commentsignal');
 
 var app = express();
 var db=require('./models');
@@ -48,6 +55,13 @@ app.use('/dislike', dislikeRouter);
 app.use('/comment', commentRouter);
 app.use('/likecomment', likecommentRouter);
 app.use('/dislikecomment', dislikecommentRouter);
+app.use('/participant', participantRouter);
+app.use('/post', postRouter);
+app.use('/likepost', likepostRouter);
+app.use('/dislikepost', dislikepostRouter);
+app.use('/commentpost', commentpostRouter);
+app.use('/signalisation', signalisationRouter);
+app.use('/commentsignal', commentsignalRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -19,6 +19,7 @@ module.exports=(sequelize,DataTypes)=>{
     );
     visite.associate=models=>{
         visite.belongsTo(models.sitearcheologique,{onDelete:"cascade"})
+        visite.hasMany(models.participant,{onDelete:"cascade"})
     }
     return visite;
 }
