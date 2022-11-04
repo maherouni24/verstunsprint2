@@ -1,0 +1,37 @@
+module.exports=(sequelize,DataTypes)=>{
+    const user=sequelize.define(
+        'user',
+        {
+            nom:{
+                type:DataTypes.STRING,
+                allowNull:false
+            },
+            prenom:{
+                type:DataTypes.STRING,
+                allowNull:false
+            },
+            mail:{
+                type:DataTypes.STRING,
+                allowNull:false
+            },
+            psw:{
+                type:DataTypes.STRING,
+                allowNull:false
+            }           
+        }
+    );
+    user.associate=models=>{
+        user.hasMany(models.like,{onDelete:"cascade"})
+        user.hasMany(models.dislike,{onDelete:"cascade"})
+    }
+    user.associate=models=>{
+        user.hasMany(models.sitearcheologique,{onDelete:"cascade"})
+    }  
+    user.associate=models=>{
+        user.hasMany(models.message,{onDelete:"cascade"})
+    } 
+    user.associate=models=>{
+        user.belongsTo(models.role,{onDelete:"cascade"})
+    }
+    return user;
+}   
