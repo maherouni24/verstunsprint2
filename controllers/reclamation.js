@@ -42,7 +42,7 @@ const transporter = nodemailer.createTransport({
 });
 //traiterReclamation
 exports.traiterReclamation = async (req, res) => {
-  const isAdmin = req.profile.role == "Admin";
+  const isAdmin = req.profile.role == "admin";
   if (!isAdmin) {
     return res.status(403).json({
       error: "You are  not authorized to perform this action !",
@@ -100,7 +100,7 @@ exports.reclamationById = (req, res, next, id) => {
 };
 //getAllReclamations
 exports.getAllReclamations = (req, res) => {
-  const isAdmin = req.profile.role == "Admin";
+  const isAdmin = req.profile.role == "admin";
   if (!isAdmin) {
     return res.status(403).json({
       error: "You are  not authorized to perform this action !",

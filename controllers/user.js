@@ -42,9 +42,7 @@ exports.updateUser = async (req, res) => {
         error: "You are  not authorized to perform this action !",
       });
     }
-  
-  
-  
+
     User.update(req.body,{where:{id:req.params.id}})
     .then(() => {
       res.json({ message: "User updated successfully", User });

@@ -42,6 +42,7 @@ exports.signup = async (req, res) => {
   };
   created_user = await User.create(new_user);
   res.status(200).json({ message: "You have successfully signed up !" });
+  //
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {

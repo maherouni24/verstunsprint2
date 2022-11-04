@@ -8,6 +8,7 @@ var logger = require("morgan");
 var indexRouter = require("./routes");
 const authRoutes = require("./routes/auth");
 const reclamationRoutes = require("./routes/reclamation");
+const statistiqueRoutes = require("./routes/statistique");
 
 
 const userRoutes = require("./routes/user");
@@ -31,6 +32,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/user", authRoutes);
 app.use("/reclamation", reclamationRoutes);
+app.use("/statistique", statistiqueRoutes);
 
 app.use("/user", userRoutes);
 app.use(function (err, req, res, next) {
