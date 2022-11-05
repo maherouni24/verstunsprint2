@@ -6,7 +6,7 @@ var db=require('../models');
 
 
 router.post('/add',(req,res)=>{
-  db.Roles.create(req.body).then(
+  db.role_type_users.create(req.body).then(
     (r)=>{
       res.send(r)
     }
