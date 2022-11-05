@@ -51,7 +51,7 @@ exports.traiterReclamation = async (req, res) => {
   let reclamation = req.reclamation;
   if (reclamation.statut == true) {
     return res.status(400).json({
-      error: "You have already approved this reclamation !",
+      error: "You have already approved this reclamationn !",
     });
   }
   reclamation.update({ statut: true });

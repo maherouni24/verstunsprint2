@@ -54,7 +54,7 @@ exports.signup = async (req, res) => {
     from: "yahyaoui.nader@esprit.tn",
     to: new_user.email,
     subject: "verfication",
-    text: "Bienvenue à WOLF Bank, " + new_user.nom +". Nous sommes ravis de vous avoir parmi nous.\n Votre username est :" +new_user.username 
+    text: "Bienvenue à Verstun,Site de reservation en ligne, " + new_user.nom +". Nous sommes ravis de vous avoir parmi nous.\n Votre username est :" +new_user.username 
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
