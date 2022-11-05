@@ -191,8 +191,7 @@ router.get('/listt',(req,res)=>{
     var UtilisateurId      = jwtUtils.getUserId(headerAuth);
 
     // Params
-   
-
+  
     asyncLib.waterfall([
       function(done) {
         db.Utilisateurs.findOne({
