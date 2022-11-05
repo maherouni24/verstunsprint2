@@ -68,7 +68,12 @@ router.post('/add',(req,res)=>{
     }
 });
 });
-
+router.put('/updat/:id',(req,res)=>{
+  db.Blogs.update(req.body,{where:{id:req.params.id}}).then((response)=>{
+    res.status(200).send(response)}).catch((err)=>{
+  res.status(400).send(err)
+  })
+  });
 //delete
 router.delete('/remove/:id',(req,res)=>{
 
@@ -110,6 +115,50 @@ router.delete('/remove/:id',(req,res)=>{
       } else {
         return res.status(500).json({ 'error': 'cannot post message' });
     }
+});
+});
+
+//update
+router.put('/update/:id',(req,res)=>{
+
+  // Getting auth header
+  var headerAuth  = req.headers['authorization'];
+  var UtilisateurId      = jwtUtils.getUserId(headerAuth);
+
+  // Params
+ 
+
+  asyncLib.waterfall([
+    function(done) {
+      db.Utilisateurs.findOne({
+        where: { id: UtilisateurId }
+      })
+      .then(function(userFound) {
+        done(null, userFound);
+      })
+      .catch(function(err) {
+        return res.status(500).json({ 'error': 'unable to verify user' });
+      });
+    },
+    function(userFound, done) {
+      if(userFound) {
+   
+          db.Blogs.update({where:{id:req.params.id}}).then((response)=>{
+            res.status(200).send(response)}).catch((err)=>{
+          res.status(400).send(err)
+          })
+          .catch(function(err) {
+              return res.status(500).json({ 'error': 'blogs not delate' });
+            });
+          }
+      
+    },
+  ], function(newMessage) {
+    if (newMessage) {
+      return res.status(201).json(newMessage);
+    } else {
+      return res.status(500).json({ 'error': 'cannot post message' });
+  }
 });
 });
 
